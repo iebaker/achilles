@@ -1,23 +1,54 @@
-class Laser {
+/**
+ * Entity class representing a Laser based weapon. Fires a single laser at a target
+ * after a warming up delay of a certain number of frames.
+ */
+class Laser extends Entity {
+  private final int laserDelay = 60;
+  private int ammunition = 5;
+  private boolean warmingUp = false;
+  private PVector target;
+  private int countdown;
   
-  PVector origin;
-  int laserDelay = 60;
-  
-  Laser(float xPos, float yPos) {
-    origin = new PVector(xPos, yPos);
+  public Laser(float xPos, float yPos) {
+    super(xPos, yPos);
+    countdown = laserDelay;
   }
   
-  //will need to somehow have this method speak to the other lasers so that only the one nearest to your mouse fires unless it's
-  //out of ammunition (if we have ammunition that is).
-  void fire() {
+  public boolean hasAmmunition() {
+    return ammunition > 0; 
+  }
+  
+  public void fireAt(float targetX, float targetY) {
+    if (!hasAmmunition()) return;
+    warmingUp = true;
+    countdown = laserDelay;
+    target = new PVector(targetX, targetY);
+  }
+  
+  @Override
+  public void update() {
+    if (warmingUp) {
+      countdown--;
+      if (countdown == 0) {
+        warmingUp = false; 
+        ammunition--;
+      }
+    }
+  }
+  
+  @Override
+  public void render() {
+    if (warmingUp) {
+      fill(0, 0, 255); 
+    } else {
+      fill(255); 
+    }
     
-    //will draw a line after a 1 second delay.  A few problems: need to hold mouse down the entire second which is not what we want.
-    // and line drawing is not animated,  will need a line with dynamic end point that moves along vector between origin and mouse when clicked.
-    laserDelay -= 1;
-    if (laserDelay == 0) {
+    noStroke();
+    ellipse(position.x, position.y, 20, 20);
+    if (countdown == 0) {
       stroke(255);
-      line(origin.x, origin.y, mouseX, mouseY);
-      laserDelay = 60;
+      line(position.x, position.y, target.x, target.y); 
     }
   }
 }

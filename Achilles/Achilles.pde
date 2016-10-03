@@ -1,15 +1,18 @@
-Laser l;
+World world;
 
 void setup() {
-  fullScreen();
+  size(800, 600);
   background(0);
   frameRate(60);
   
-  l = new Laser(width / 2, height);
+  world = new World();
 }
 
 void draw() {
-  if (mousePressed == true) {
-    l.fire();
-  }
+  world.update();
+  world.render();
+}
+
+void mousePressed() {
+  world.fireLaserAt(mouseX, mouseY);
 }
