@@ -1,6 +1,4 @@
-
 Laser l;
-
 
 void setup() {
   fullScreen();
@@ -8,15 +6,10 @@ void setup() {
   frameRate(60);
   
   l = new Laser(width / 2, height);
-
 }
 
 void draw() {
-  
   if (mousePressed == true) {
-    
     l.fire();
   }
-  
-
 }
