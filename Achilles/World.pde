@@ -11,6 +11,7 @@ import java.util.Set;
 class World {
   private Set<Entity> entities = new HashSet<Entity>();
   private Set<Entity> entering = new HashSet<Entity>();
+  private Set<Entity> deleting = new HashSet<Entity>();
   private List<Laser> lasers = new ArrayList<Laser>();
 
   public World() {
@@ -24,8 +25,15 @@ class World {
     entering.addAll(Arrays.asList(newEntities));
   }
 
+  public void removeEntities(Entity... oldEntities) {
+    deleting.addAll(Arrays.asList(oldEntities));
+  }
+
   public void update() {
     entities.addAll(entering);
+    entities.removeAll(deleting);
+
+    deleting.clear();
     entering.clear();
     for (Entity entity : entities) {
       entity.update();
