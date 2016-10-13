@@ -8,25 +8,26 @@ class Laser extends Entity {
   private boolean warmingUp = false;
   private PVector target;
   private int countdown;
-  
+
+
   public Laser(float xPos, float yPos) {
     super(xPos, yPos);
     countdown = laserDelay;
   }
-  
+
   public boolean hasAmmunition() {
-    return ammunition > 0; 
+    return ammunition > 0;
   }
-  
+
   public void fireAt(float targetX, float targetY) {
     if (!hasAmmunition()) return;
     warmingUp = true;
     countdown = laserDelay;
     target = new PVector(targetX, targetY);
   }
-  
+
   @Override
-  public void update() {
+    public void update() {
     if (warmingUp) {
       countdown--;
       if (countdown == 0) {
@@ -35,20 +36,24 @@ class Laser extends Entity {
       }
     }
   }
-  
+
   @Override
-  public void render() {
+    public void render() {
     if (warmingUp) {
-      fill(0, 0, 255); 
+      fill(0, 0, 255);
     } else {
-      fill(255); 
+      fill(255);
     }
-    
+
     noStroke();
     ellipse(position.x, position.y, 20, 20);
     if (countdown == 0) {
-      stroke(255);
-      line(position.x, position.y, target.x, target.y); 
+
+      LaserBeam lb = new LaserBeam(position.x, position.y, target.x, target.y);
+      world.addEntities(lb);
+
+      //stroke(255);
+      //line(position.x, position.y, target.x, target.y);
     }
   }
 }

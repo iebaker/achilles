@@ -12,32 +12,32 @@ class World {
   private Set<Entity> entities = new HashSet<Entity>();
   private Set<Entity> entering = new HashSet<Entity>();
   private List<Laser> lasers = new ArrayList<Laser>();
-  
+
   public World() {
     lasers.add(new Laser(0, height));
     lasers.add(new Laser(width / 2, height));
     lasers.add(new Laser(width, height));
     entering.addAll(lasers);
   }
-  
+
   public void addEntities(Entity... newEntities) {
-    entering.addAll(Arrays.asList(newEntities)); 
+    entering.addAll(Arrays.asList(newEntities));
   }
-  
+
   public void update() {
     entities.addAll(entering);
     entering.clear();
     for (Entity entity : entities) {
-      entity.update(); 
+      entity.update();
     }
   }
-  
+
   public void render() {
     for (Entity entity : entities) {
-      entity.render(); 
+      entity.render();
     }
   }
-  
+
   public void fireLaserAt(float targetX, float targetY) {
     Collections.sort(lasers, new LaserDistanceComparator(targetX, targetY));
     for (Laser laser : lasers) {
