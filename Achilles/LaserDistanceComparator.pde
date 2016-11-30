@@ -6,22 +6,22 @@ import java.util.Comparator;
  */
 class LaserDistanceComparator implements Comparator<Laser> {
   private PVector target;
-  
+
   public LaserDistanceComparator(float targetX, float targetY) {
     target = new PVector(targetX, targetY);
   }
-  
+
   @Override
-  public int compare(Laser laser1, Laser laser2) {
+    public int compare(Laser laser1, Laser laser2) {
     float distanceToLaser1 = PVector.dist(laser1.getPosition(), target);
     float distanceToLaser2 = PVector.dist(laser2.getPosition(), target);
-    
+
     if (distanceToLaser1 < distanceToLaser2) {
-      return -1; 
+      return -1;
     } else if (distanceToLaser1 == distanceToLaser2) {
       return 0;
     } else {
-      return 1; 
+      return 1;
     }
   }
 }

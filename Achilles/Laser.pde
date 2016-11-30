@@ -8,12 +8,11 @@ class Laser extends Entity {
   private boolean warmingUp = false;
   private PVector target;
   private int countdown;
-  private int countdown2 = 60;
 
 
 
-  public Laser(float xPos, float yPos) {
-    super(xPos, yPos);
+  public Laser(float xPos, float yPos, float velocity) {
+    super(xPos, yPos, velocity);
     countdown = laserDelay;
   }
 
@@ -49,24 +48,13 @@ class Laser extends Entity {
 
     noStroke();
     ellipse(position.x, position.y, 20, 20);
-    
+
     if (countdown == 0) {
 
-      LaserBeam lb = new LaserBeam(position.x, position.y, target.x, target.y);
+      LaserBeam lb = new LaserBeam(position.x, position.y, 1, target.x, target.y);
       world.addEntities(lb);
       println("NEWLAZABEAM");
       countdown = 60;
-
-//      if (warmingUp == false) {
-//        countdown2--;
-//        if (countdown2 == 0) {
-//          world.removeEntities(lb);
-//          println("BYEBYEBYE");
-//          countdown2 = 60;
-//        }
-//      }
-      //stroke(255);
-      //line(position.x, position.y, target.x, target.y);
     }
   }
 }

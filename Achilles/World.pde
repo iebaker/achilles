@@ -15,9 +15,9 @@ class World {
   private List<Laser> lasers = new ArrayList<Laser>();
 
   public World() {
-    lasers.add(new Laser(0, height));
-    lasers.add(new Laser(width / 2, height));
-    lasers.add(new Laser(width, height));
+    lasers.add(new Laser(0, height, 0));
+    lasers.add(new Laser(width / 2, height, 0));
+    lasers.add(new Laser(width, height, 0));
     entering.addAll(lasers);
   }
 
@@ -33,8 +33,8 @@ class World {
     entities.addAll(entering);
     entities.removeAll(deleting);
 
-    deleting.clear();
     entering.clear();
+    deleting.clear();
     for (Entity entity : entities) {
       entity.update();
     }

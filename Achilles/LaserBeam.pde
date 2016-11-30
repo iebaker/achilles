@@ -9,8 +9,8 @@ class LaserBeam extends Entity {
   private boolean sustain = true;
 
 
-  public LaserBeam(float xPos, float yPos, float targetX, float targetY) {
-    super(xPos, yPos);
+  public LaserBeam(float xPos, float yPos, float velocity, float targetX, float targetY) {
+    super(xPos, yPos, velocity);
     target = new PVector(targetX, targetY);
   }
 
@@ -18,9 +18,12 @@ class LaserBeam extends Entity {
     public void render() {
     stroke(255);
     line(position.x, position.y, target.x, target.y);
-    
+    Explosion xp = new Explosion (target.x, target.y, 1);
+    world.addEntities(xp);
+
     if (countdown == 0) {
       world.removeEntities(this);
+
       countdown = 60;
       sustain = true;
     }
@@ -28,7 +31,7 @@ class LaserBeam extends Entity {
 
   @Override
     public void update() {
-    if (sustain) {
+    if (sustain == true) {
       countdown--;
       if (countdown == 0) {
         sustain = false;

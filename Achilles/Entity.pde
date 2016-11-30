@@ -4,15 +4,17 @@
  */
 abstract class Entity {
   protected PVector position;
-  
-  public Entity(float xPos, float yPos) {
+  protected float vel;
+
+  public Entity(float xPos, float yPos, float velocity) {
     position = new PVector(xPos, yPos); 
+    vel = velocity;
   }
-  
+
   public PVector getPosition() {
-    return position; 
+    return position;
   }
-  
+
   public abstract void update();
   public abstract void render();
 }
